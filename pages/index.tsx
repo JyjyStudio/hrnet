@@ -1,21 +1,20 @@
-import styled from 'styled-components'
-import Link from 'next/link'
-import { useState } from 'react'
-import Modal from '../components/Modal'
-import Input from '../components/Form/Input'
-import StateSelect from '../components/Form/SelectState'
-import DatePicker from '../components/Form/DatePicker'
-import Dropdown from '../components/Form/Dropdown'
-import Image from 'next/image'
 import Head from 'next/head'
-import BgImage from '../public/assets/Abstract-Gradient-5.png'
+import Link from 'next/link'
+import styled from 'styled-components'
+import { useState } from 'react'
+import Modal from '../components/Modal/Modal'
+import Input from '../components/Form/Input'
+import DatePicker from '../components/Form/DatePicker'
+import DepartmentDropdown from '../components/Form/DepartmentDropdown'
+import StateDropdown from '../components/Form/StateDropdown'
 
-export default function Home(): JSX.Element {
+export default function HomePage(): JSX.Element {
 
 	// local state to store every input value
 	const [modal, setModal] = useState(false)
 	const [firstname, setFirstname] = useState("")
 	const [lastname, setLastname] = useState("")
+	const [dateOfBirth, setDateOfBirth] = useState(new Date())
 	const [startDate, setStartDate] = useState(new Date())
 	const [street, setStreet] = useState("")
 	const [city, setCity] = useState("")
@@ -28,47 +27,51 @@ export default function Home(): JSX.Element {
 		event.preventDefault()
 		// dispatch(addEmployee())
 		setModal(true)
+		const newEmployee = {
+			firstname,
+			lastname,
+			dateOfBirth,
+			startDate,
+			street,
+			city,
+			state,
+			zipCode,
+			department
+		}
+
+		console.log(newEmployee);
+		
 	}
 
 
 	return (
 		<>
 		<Head>
-			<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 			<title>HRNET - Homepage</title>
 		</Head>
 		<Container>
-			<BgContainer>
-				<Image src={BgImage} alt="background" quality={100} fill placeholder="blur" />
-			</BgContainer>
-			
+
 			<Headings>
-				<h1>HRnet</h1>
+				<H1>HRnet</H1>
 				<StyledLink href="list">View Current Employees</StyledLink>
-				<h2>Create Employee</h2>
 			</Headings>
 				
 			<Form onSubmit={handleSubmit}>
-
+				<h2 style={{textAlign: 'center'}}>Create Employee</h2>
 				<Input type='text' name='first-name' value={firstname} setFunction={setFirstname} required/>
 				<Input type='text' name='last-name' value={lastname} setFunction={setLastname} required/>
-				<DatePicker label='date-of-birth' maxDate={new Date()} required />
-				<DatePicker label='start-date' required />
+				<DatePicker value={dateOfBirth} setFunction={setDateOfBirth} label='date-of-birth' maxDate={new Date()} required />
+				<DatePicker value={startDate} setFunction={setStartDate} label='start-date' required noWeekends/>
 				<Fieldset>
-					<Legend>Address</Legend>
 					<Input type='text' name='street' value={street} setFunction={setStreet} required/>
+					<Legend>Address</Legend>
 					<Input type='text' name='city' value={city} setFunction={setCity} required/>
-					<StateSelect value={state} setFunction={setState}/>
+					<StateDropdown setFunction={setState} />
 					<Input type='number' name='zip-code' value={zipCode} setFunction={setZipCode} min={0} required/>
 				</Fieldset>
-
-				{/* <DepartmentSelect value={department} setFunction={setDepartment} /> */}
 				
-				<Dropdown />
-				
+				<DepartmentDropdown setFunction={setDepartment} />
 				<SubmitBtn type="submit">Save</SubmitBtn>
-				
 			</Form>
 
 			{modal && <Modal setModal={setModal}>Employee Created Successfully !</Modal>}
@@ -80,19 +83,13 @@ export default function Home(): JSX.Element {
 const Container = styled.main`
 	height: 100%;
 	display: flex;
-	max-width: 800px;
+	max-width: 1000px;
     margin: 0 auto;
     -webkit-justify-content: space-around;
 	@media screen and (max-width: 700px) {
 		flex-direction: column;
 		-webkit-justify-content: inherit;
 	}
-`
-const BgContainer = styled.div`
-	z-index: -1;
-	position: fixed;
-	width: 100vw;
-	height: 100vh;
 `
 const Headings = styled.div`
 	display: flex;
@@ -104,9 +101,14 @@ const Headings = styled.div`
 		height: auto;
 	}
 `
+const H1 = styled.h1`
+	font-size: 5rem;
+`
 const StyledLink = styled(Link)`
 	color: inherit;
 	text-decoration: none;
+	font-size: 1.5rem;
+    margin-top: 1rem;
 	&:hover {
 		text-decoration: underline;
 	}
@@ -119,7 +121,6 @@ const Form = styled.form`
     box-shadow: 0 8px 32px 0 rgb(31 38 135 / 37%);
     backdrop-filter: blur( 1.5px );
     -webkit-backdrop-filter: blur( 1.5px );
-    border-radius: 10px;
     border: 1px solid rgba( 255, 255, 255, 0.18 );
     padding: 5px 1rem 10px;
     width: 50%;
@@ -130,14 +131,14 @@ const Form = styled.form`
 	}
 `
 const Fieldset = styled.fieldset`
-	margin-top: 10px;
+	margin-top: 6px;
 	padding: 5px 10px 10px;
-	border: 1px solid blueviolet;
+	border: 1px solid #8a2be270;
+	border-radius: 3px;
 `
 const Legend = styled.legend`
 	padding: 0 5px;
     line-height: 1rem;
-    font-style: italic;
 `
 const SubmitBtn = styled.button`
 	margin-top: 1rem;
