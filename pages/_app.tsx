@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
       	</Head>
 		<BgContainer>
-			<Image src="/assets/Abstract-Gradient-5.png" alt="background image" quality={100} fill blurDataURL="backgroud image" />
+			<Image src="/public/assets/Abstract-Gradient-5.png" alt="background image" quality={100} fill blurDataURL="backgroud image" />
 		</BgContainer>
 		
 		<Component {...pageProps} />

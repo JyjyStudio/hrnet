@@ -6,6 +6,7 @@ const nextConfig = {
 		// Enables the styled-components SWC transform
 		styledComponents: true,
 	},
+	basePath: '/hrnet'
 }
 
 module.exports = nextConfig
