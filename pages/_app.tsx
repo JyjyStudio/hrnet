@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
       	</Head>
 		<BgContainer>
-			<Image src={`${process.env.NEXT_PUBLIC_BACKGROUND}/assets/Abstract-Gradient-5.png`} alt="background" quality={100} fill placeholder="blur" />
+			<Image src={BgImage} alt="background" quality={100} fill placeholder="blur" />
 		</BgContainer>
 		
 		<Component {...pageProps} />

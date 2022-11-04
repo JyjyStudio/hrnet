@@ -6,12 +6,6 @@ const nextConfig = {
 		// Enables the styled-components SWC transform
 		styledComponents: true,
 	},
-	images: {
-		loader: "akamai",
-		path: ""
-	},
-	basePath: '/hrnet',
-	assetPrefix: '/hrnet'
 }
 
 module.exports = nextConfig
