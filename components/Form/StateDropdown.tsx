@@ -1,5 +1,5 @@
 import Dropdown from "../Dropdown/Dropdown"
-import styled from 'styled-components'
+import { SetStateAction } from "react"
 
 export default function StateDropdown({ setFunction }:Props) {
 		
@@ -19,5 +19,5 @@ export default function StateDropdown({ setFunction }:Props) {
 }
 
 interface Props {
-	setFunction: Function
+	setFunction: React.Dispatch<SetStateAction<string>>
 }

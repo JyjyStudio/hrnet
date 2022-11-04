@@ -8,6 +8,7 @@ import DatePicker from '../components/Form/DatePicker'
 import DepartmentDropdown from '../components/Form/DepartmentDropdown'
 import StateDropdown from '../components/Form/StateDropdown'
 
+
 export default function HomePage(): JSX.Element {
 
 	// local state to store every input value
@@ -21,6 +22,7 @@ export default function HomePage(): JSX.Element {
 	const [state, setState] = useState("")
 	const [zipCode, setZipCode] = useState("")
 	const [department, setDepartment] = useState("")
+
 
 	// const dispatch = useTsDispatch()
 	const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
@@ -43,6 +45,7 @@ export default function HomePage(): JSX.Element {
 		
 	}
 
+	// setFlagsFromString({...Form, satut : ok})
 
 	return (
 		<>

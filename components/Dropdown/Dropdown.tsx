@@ -10,14 +10,11 @@ export default function PersonnalDropdown({options, setFunction, placeholder}:Pr
 			className={styles.styled_Dropdown}
 			placeholder={placeholder}
 			options={options}
-			value="one"
 			onChange={(value) => {
 				console.log('change!', value)
 				setFunction(value.value)
 			}}
-			onSelect={(value) => console.log('selected!', value)} // always fires once a selection happens even if there is no change
-			onClose={(closedBySelection) => console.log('closedBySelection?:', closedBySelection)}
-			onOpen={() => console.log('open!')}
+			// onSelect={(value) => console.log('selected!', value)} // always fires once a selection happens even if there is no change
 		/>
 	)
 }
