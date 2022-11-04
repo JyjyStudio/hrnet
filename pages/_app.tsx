@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import Image from 'next/image'
-import BgImage from 'public/assets/Abstract-Gradient-5.png'
+import BgImage from '/assets/Abstract-Gradient-5.png'
 import styled from 'styled-components'
 import '../styles/globals.css'
 
