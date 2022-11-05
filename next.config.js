@@ -9,7 +9,9 @@ const nextConfig = {
 	images: {
 		loader: "akamai",
 		path: ""
-	}
+	},
+	basePath: '/hrnet',
+	assetPrefix: '/hrnet'
 }
 
 module.exports = nextConfig
