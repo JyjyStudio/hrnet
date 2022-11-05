@@ -6,6 +6,8 @@ import styled from 'styled-components'
 import '../styles/globals.css'
 
 export default function App({ Component, pageProps }: AppProps) {
+console.log(process.env.NODE_ENV)
+
   return (
 	<>
 		<Head>
@@ -13,7 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
       	</Head>
 		<BgContainer>
-			<Image src="assets/Abstract-Gradient-5.png" alt="background" quality={100} fill placeholder="blur" />
+			<Image src={BgImage} alt="background" quality={100} fill placeholder="blur" />
 		</BgContainer>
 		
 		<Component {...pageProps} />
