@@ -6,21 +6,25 @@ import styled from 'styled-components'
 import '../styles/globals.css'
 
 export default function App({ Component, pageProps }: AppProps) {
-console.log(process.env.NODE_ENV)
+	return (
+		<>
+			<Head>
+				<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+				<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			</Head>
+			<BgContainer>
+				<Image
+					src={BgImage}
+					alt="background"
+					quality={100}
+					fill
+					placeholder="blur"
+				/>
+			</BgContainer>
 
-  return (
-	<>
-		<Head>
-			<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      	</Head>
-		<BgContainer>
-			<Image src={BgImage} alt="background" quality={100} fill placeholder="blur" />
-		</BgContainer>
-		
-		<Component {...pageProps} />
-	</>
-  )
+			<Component {...pageProps} />
+		</>
+	)
 }
 
 const BgContainer = styled.div`
@@ -29,3 +33,4 @@ const BgContainer = styled.div`
 	width: 100vw;
 	height: 100vh;
 `
+
