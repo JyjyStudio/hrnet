@@ -33,7 +33,7 @@ const Content = styled.div`
 	@media screen and (max-width: 500px) {
 	    width: 60%;
     	padding: 4rem 1rem;
-    	top: 45%;
+    	top: 60%;
 	    font-size: 1.2rem;
 	}
 `
