@@ -30,6 +30,12 @@ const Content = styled.div`
 	top: 40%;
 	left: 50%;
     transform: translateX(-50%);
+	@media screen and (max-width: 500px) {
+	    width: 60%;
+    	padding: 4rem 1rem;
+    	top: 45%;
+	    font-size: 1.2rem;
+	}
 `
 const CloseIcon = styled.span`
 	position: absolute;
