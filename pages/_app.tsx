@@ -32,5 +32,10 @@ const BgContainer = styled.div`
 	position: fixed;
 	width: 100vw;
 	height: 100vh;
+	@media (max-width: 500px) {
+        background-attachment: scroll;
+		min-width: 100%;
+  		min-height: 100%;
+    }
 `
 
