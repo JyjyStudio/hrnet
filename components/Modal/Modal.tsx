@@ -13,7 +13,7 @@ export default function Modal({ children, setModal }: Props): JSX.Element {
 }
 
 const Overlay = styled.div`
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	bottom: 0;
