@@ -39,5 +39,5 @@ interface Props {
 	required?: boolean
 	setFunction: Function
 	noWeekends?: boolean
-	value: Date
+	value: string
 }
