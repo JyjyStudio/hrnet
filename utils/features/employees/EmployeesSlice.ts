@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 //creation d'une partie de notre store (slice). Contient le nom du slice, son state initial et les reducers
-const initialState: Employees = []
+const initialState: Employee[] = []
 
 export const employeesSlice = createSlice({
 	name: 'employees',
@@ -26,7 +26,5 @@ export interface Employee {
 	zipCode: string
 	department: string
 }
-
-type Employees = [] | [Employee]
 
 export default employeesSlice.reducer
