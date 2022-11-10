@@ -1,9 +1,11 @@
-import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import Image from 'next/image'
 import BgImage from '/public/assets/Abstract-Gradient-5.png'
 import styled from 'styled-components'
-import '../styles/globals.css'
+import type { AppProps } from 'next/app'
+import { Provider } from 'react-redux'
+import { store } from '../utils/redux/store'
+import '../utils/styles/globals.css'
 
 export default function App({ Component, pageProps }: AppProps) {
 	return (
@@ -21,8 +23,9 @@ export default function App({ Component, pageProps }: AppProps) {
 					placeholder="blur"
 				/>
 			</BgContainer>
-
-			<Component {...pageProps} />
+			<Provider store={store}>
+				<Component {...pageProps} />
+			</Provider>
 		</>
 	)
 }
