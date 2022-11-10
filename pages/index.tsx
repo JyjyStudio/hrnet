@@ -1,8 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { useState } from 'react'
-import Modal from '../components/Modal/Modal'
 import Form from '../components/Form/Form'
 
 
@@ -17,7 +15,7 @@ export default function HomePage(): JSX.Element {
 		<Container>
 			<Headings>
 				<H1>HRnet</H1>
-				<StyledLink href="list">View Current Employees</StyledLink>
+				<StyledLink href="employees">View Current Employees</StyledLink>
 			</Headings>
 				
 			<Form />
