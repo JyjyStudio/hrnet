@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -15,12 +15,13 @@ import styles from './Table.module.css'
 import { useTsSelector } from '../../utils/redux/hooks'
 import { getEmployees } from '../../utils/features/employees/selectors'
 import { Employee } from '../../utils/features/employees/EmployeesSlice'
+import SearchBar from "material-ui-search-bar"
 
 export default function EnhancedTable() {
-	const [order, setOrder] = React.useState<Order>('asc')
-	const [orderBy, setOrderBy] = React.useState<keyof Employee>('firstname')
-	const [page, setPage] = React.useState(0)
-	const [rowsPerPage, setRowsPerPage] = React.useState(5)
+	const [order, setOrder] = useState<Order>('asc')
+	const [orderBy, setOrderBy] = useState<keyof Employee>('firstname')
+	const [page, setPage] = useState(0)
+	const [rowsPerPage, setRowsPerPage] = useState(5)
 
 	const handleRequestSort = (
 		event: React.MouseEvent<unknown>,
@@ -42,14 +43,11 @@ export default function EnhancedTable() {
 		setPage(0)
 	}
 
-	
 	const employees = useTsSelector(getEmployees)
-	console.log(employees);
-
-
+	const [rows, setRows] = useState<Employee[]>(employees)
 	return (
-		<Box className={styles.bg} >
-			<EnhancedTableToolbar />
+		<Box className={`${styles.bg} ${styles.center}`}>
+			<EnhancedTableToolbar rows={rows} setRows={setRows} />
 			<TableContainer>
 				<Table sx={{ minWidth: 500 }} aria-labelledby="employees">
 					<EnhancedTableHead
@@ -60,8 +58,8 @@ export default function EnhancedTable() {
 					<TableBody>
 						{/* if you don't need to support IE11, you can replace the `stableSort` call with:
 						rows.sort(getComparator(order, orderBy)).slice() 
-						@ts-ignore*/}
-						{stableSort(employees, getComparator(order, orderBy))
+						*/}
+						{stableSort(rows, getComparator(order, orderBy))
 							.slice(
 								page * rowsPerPage,
 								page * rowsPerPage + rowsPerPage
@@ -71,13 +69,17 @@ export default function EnhancedTable() {
 									<TableRow
 										hover
 										tabIndex={-1}
-										key={row.firstname}
+										key={`${row.firstname}-${row.lastname}`}
 									>
 										<TableCell>{row.firstname}</TableCell>
 										<TableCell>{row.lastname}</TableCell>
-										<TableCell>{row.startDate.toString()}</TableCell>
+										<TableCell>
+											{row.startDate.toString()}
+										</TableCell>
 										<TableCell>{row.department}</TableCell>
-										<TableCell>{row.dateOfBirth.toString()}</TableCell>
+										<TableCell>
+											{row.dateOfBirth.toString()}
+										</TableCell>
 										<TableCell>{row.street}</TableCell>
 										<TableCell>{row.city}</TableCell>
 										<TableCell>{row.state}</TableCell>
@@ -93,7 +95,7 @@ export default function EnhancedTable() {
 			<TablePagination
 				rowsPerPageOptions={[5, 10, 25]}
 				component="div"
-				count={employees.length}
+				count={rows.length}
 				rowsPerPage={rowsPerPage}
 				page={page}
 				onPageChange={handleChangePage}
@@ -102,8 +104,6 @@ export default function EnhancedTable() {
 		</Box>
 	)
 }
-
-
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 	if (b[orderBy] < a[orderBy]) {
@@ -129,8 +129,6 @@ function getComparator<Key extends keyof any>(
 		: (a, b) => -descendingComparator(a, b, orderBy)
 }
 
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
 function stableSort<T>(
 	array: readonly T[],
 	comparator: (a: T, b: T) => number
@@ -246,7 +244,29 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 	)
 }
 
-function EnhancedTableToolbar() {
+function EnhancedTableToolbar({rows, setRows}:any) {
+	const employees:Employee[] = useTsSelector(getEmployees)
+	const requestSearch = (searchedValue:string) => {
+		const filteredRows = employees.filter((row:Employee) => {			
+			return (
+				row.firstname.toLowerCase().includes(searchedValue.toLowerCase()) ||
+				row.lastname.toLowerCase().includes(searchedValue.toLowerCase()) ||
+				row.startDate.toLowerCase().includes(searchedValue.toLowerCase()) ||
+				row.department.toLowerCase().includes(searchedValue.toLowerCase()) ||
+				row.dateOfBirth.toLowerCase().includes(searchedValue.toLowerCase()) ||
+				row.street.toLowerCase().includes(searchedValue.toLowerCase()) ||
+				row.city.toLowerCase().includes(searchedValue.toLowerCase()) ||
+				row.state.toLowerCase().includes(searchedValue.toLowerCase()) ||
+				row.zipCode.toLowerCase().includes(searchedValue.toLowerCase())
+			)
+		})
+		setRows(filteredRows)		
+	}
+
+	const cancelSearch = () => {
+		requestSearch("")		
+	}
+	
 	return (
 		<Toolbar
 			sx={{
@@ -262,6 +282,19 @@ function EnhancedTableToolbar() {
 			>
 				Employees
 			</Typography>
+			<SearchBar
+				className={styles.bg}
+				onChange={(searchedValue) => requestSearch(searchedValue)}
+				onCancelSearch={cancelSearch}
+				style={{
+					minWidth: 300,
+					height: '40px', 
+					background:'inherit',
+					padding: '5px 010px 1rem'
+				}}
+				placeholder="Search an employee"
+				cancelOnEscape
+			/>
 		</Toolbar>
 	)
 }
