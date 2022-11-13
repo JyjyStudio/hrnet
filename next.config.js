@@ -11,11 +11,6 @@ const nextConfig = {
 		loader: 'custom',
 		unoptimized: true
 	},
-	experimental: {
-		images: {
-			unoptimized: true
-		}
-	}
 }
 
 module.exports = nextConfig
