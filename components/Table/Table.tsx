@@ -273,6 +273,7 @@ function EnhancedTableToolbar({rows, setRows}:any) {
 				pl: { sm: 2 },
 				pr: { xs: 1, sm: 1 },
 			}}
+			className='mobile'
 		>
 			<Typography
 				sx={{ flex: '1 1 100%' }}
