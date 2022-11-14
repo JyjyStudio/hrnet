@@ -24,6 +24,20 @@ export default function Form() {
 	const [zipCode, setZipCode] = useState('')
 	const [department, setDepartment] = useState('')
 
+	// const initialState = {
+	// 	firstname: '',
+	// 	lastname: '',
+	// 	dateOfBirth: new Date().toLocaleDateString(),
+	// 	startDate: new Date().toLocaleDateString(),
+	// 	street: '',
+	// 	city: '',
+	// 	state: '',
+	// 	zipCode: '',
+	// 	department: '',
+	// }
+	
+	// const [newEmployee, setNewEmployee] = useState<Employee>(initialState)
+
 	const dispatch = useTsDispatch()
 
 	const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
