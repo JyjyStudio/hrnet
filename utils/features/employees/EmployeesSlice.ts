@@ -15,7 +15,7 @@ export const employeesSlice = createSlice({
 
 export const { addEmployee } = employeesSlice.actions 
 
-export interface Employee {
+export type Employee = null | {
 	firstname: string
 	lastname: string
 	dateOfBirth: string
