@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import DatePicker from './DatePicker'
 import DepartmentDropdown from './DepartmentDropdown'
 import StateDropdown from './StateDropdown'
@@ -6,10 +6,7 @@ import Input from './Input'
 import styled from 'styled-components'
 import Modal from '../Modal/Modal'
 import { useTsDispatch } from '../../utils/redux/hooks'
-import {
-	addEmployee,
-	Employee,
-} from '../../utils/features/employees/EmployeesSlice'
+import { addEmployee, Employee } from '../../utils/features/employees/EmployeesSlice'
 
 export default function Form() {
 	// local state to store every input value
@@ -23,27 +20,10 @@ export default function Form() {
 	const [state, setState] = useState('')
 	const [zipCode, setZipCode] = useState('')
 	const [department, setDepartment] = useState('')
+	const [newEmployee, setNewEmployee] = useState<Employee>(null)
 
-	// const initialState = {
-	// 	firstname: '',
-	// 	lastname: '',
-	// 	dateOfBirth: new Date().toLocaleDateString(),
-	// 	startDate: new Date().toLocaleDateString(),
-	// 	street: '',
-	// 	city: '',
-	// 	state: '',
-	// 	zipCode: '',
-	// 	department: '',
-	// }
-	
-	// const [newEmployee, setNewEmployee] = useState<Employee>(initialState)
-
-	const dispatch = useTsDispatch()
-
-	const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
-		event.preventDefault()
-		setModal(true)
-		const newEmployee: Employee = {
+	useEffect(() => {
+		setNewEmployee({
 			firstname,
 			lastname,
 			dateOfBirth,
@@ -53,10 +33,16 @@ export default function Form() {
 			state,
 			zipCode,
 			department,
-		}
-		dispatch(addEmployee(newEmployee))
+		})
+	}, [firstname, lastname, dateOfBirth, startDate, street, city, state, zipCode, department])
 
-		console.log(newEmployee)
+
+	const dispatch = useTsDispatch()
+
+	const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
+		event.preventDefault()
+		setModal(true)
+		dispatch(addEmployee(newEmployee))
 	}
 
 	return (
