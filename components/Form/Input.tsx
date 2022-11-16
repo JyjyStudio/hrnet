@@ -4,19 +4,15 @@ import styled from 'styled-components'
 /**
  * Used to standardize the style and usage of input text or date or number in all our forms.
  */
-export default function Input({ type, name, value, setFunction, min, required }: Props) {
-
-	const formatName = (name : string) => name.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1) + ' ')
+export default function Input({ type, name, label, min, required }: Props) {
 
 	return (
 		<Container>
-			<label htmlFor={name}>{formatName(name)}</label>
+			<label htmlFor={name}>{label}</label>
 			<input
 				type={type}
 				id={name}
 				name={name}
-				value={value}
-				onChange={(event) => setFunction(event.target.value)}
 				required={required ? true : false}
 				min={min && "0"}
 			/>
@@ -26,8 +22,7 @@ export default function Input({ type, name, value, setFunction, min, required }:
 interface Props {
 	type: string
 	name: string
-	value: string
-	setFunction: React.Dispatch<SetStateAction<string>>
+	label?: string
 	required?: boolean
 	min?: number
 }
