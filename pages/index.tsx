@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import styled from 'styled-components'
-import Form from '../components/Form/FormV2'
+import Form from '../components/Form/Form'
 
 
 export default function HomePage(): JSX.Element {
