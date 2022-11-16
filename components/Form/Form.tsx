@@ -9,39 +9,22 @@ import { useTsDispatch } from '../../utils/redux/hooks'
 import { addEmployee, Employee } from '../../utils/features/employees/EmployeesSlice'
 
 export default function Form() {
-	// local state to store every input value
 	const [modal, setModal] = useState(false)
-	const [firstname, setFirstname] = useState('')
-	const [lastname, setLastname] = useState('')
 	const [dateOfBirth, setDateOfBirth] = useState(new Date().toLocaleDateString())
 	const [startDate, setStartDate] = useState(new Date().toLocaleDateString())
-	const [street, setStreet] = useState('')
-	const [city, setCity] = useState('')
 	const [state, setState] = useState('')
-	const [zipCode, setZipCode] = useState('')
 	const [department, setDepartment] = useState('')
-	const [newEmployee, setNewEmployee] = useState<Employee>(null)
-
-	useEffect(() => {
-		setNewEmployee({
-			firstname,
-			lastname,
-			dateOfBirth,
-			startDate,
-			street,
-			city,
-			state,
-			zipCode,
-			department,
-		})
-	}, [firstname, lastname, dateOfBirth, startDate, street, city, state, zipCode, department])
-
 
 	const dispatch = useTsDispatch()
 
 	const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
 		event.preventDefault()
 		setModal(true)
+		const data = new FormData(event.target)
+		const inputs = Object.fromEntries(data.entries())
+		//@ts-ignore
+		const newEmployee:Employee = {...inputs, dateOfBirth, startDate, state, department}
+		console.log('newEmployee:', newEmployee)
 		dispatch(addEmployee(newEmployee))
 	}
 
@@ -51,16 +34,14 @@ export default function Form() {
 				<h2 style={{ textAlign: 'center' }}>Create Employee</h2>
 				<Input
 					type="text"
-					name="first-name"
-					value={firstname}
-					setFunction={setFirstname}
+					label="First Name"
+					name="firstname"
 					required
 				/>
 				<Input
 					type="text"
-					name="last-name"
-					value={lastname}
-					setFunction={setLastname}
+					label="Last Name"
+					name="lastname"
 					required
 				/>
 				<DatePicker
@@ -80,25 +61,22 @@ export default function Form() {
 				<Fieldset>
 					<Input
 						type="text"
+						label="street"
 						name="street"
-						value={street}
-						setFunction={setStreet}
 						required
 					/>
 					<Legend>Address</Legend>
 					<Input
 						type="text"
+						label="city"
 						name="city"
-						value={city}
-						setFunction={setCity}
 						required
 					/>
 					<StateDropdown setFunction={setState} />
 					<Input
 						type="number"
-						name="zip-code"
-						value={zipCode}
-						setFunction={setZipCode}
+						label="Zip Code"
+						name="zipCode"
 						min={0}
 						required
 					/>
@@ -107,11 +85,11 @@ export default function Form() {
 				<DepartmentDropdown setFunction={setDepartment} />
 				<SubmitBtn type="submit">Save</SubmitBtn>
 			</StyledForm>
-			{modal && (
+			{!!modal &&
 				<Modal setModal={setModal}>
 					Employee Created Successfully !
 				</Modal>
-			)}
+			}
 		</>
 	)
 }
