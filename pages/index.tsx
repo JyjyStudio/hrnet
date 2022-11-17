@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import styled from 'styled-components'
-import Form from '../components/Form/Form'
+import Form from '../components/Form/FormV2'
 
 
 export default function HomePage(): JSX.Element {
@@ -19,7 +19,6 @@ export default function HomePage(): JSX.Element {
 			</Headings>
 				
 			<Form />
-
 		</Container>
 
 	</>
@@ -29,12 +28,13 @@ export default function HomePage(): JSX.Element {
 const Container = styled.main`
 	height: 100%;
 	display: flex;
+	align-items: center;
+	justify-content: space-around;
 	max-width: 1000px;
     margin: 0 auto;
-    -webkit-justify-content: space-around;
 	@media screen and (max-width: 700px) {
 		flex-direction: column;
-		-webkit-justify-content: inherit;
+		justify-content: inherit;
 	}
 `
 const Headings = styled.div`
