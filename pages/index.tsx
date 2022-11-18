@@ -17,8 +17,9 @@ export default function HomePage(): JSX.Element {
 				<H1>HRnet</H1>
 				<StyledLink href="employees">View Current Employees</StyledLink>
 			</Headings>
-				<h2>test</h2>
+				
 			<Form />
+
 		</Container>
 
 	</>
@@ -28,13 +29,12 @@ export default function HomePage(): JSX.Element {
 const Container = styled.main`
 	height: 100%;
 	display: flex;
-	align-items: center;
-	justify-content: space-around;
 	max-width: 1000px;
     margin: 0 auto;
+    -webkit-justify-content: space-around;
 	@media screen and (max-width: 700px) {
 		flex-direction: column;
-		justify-content: inherit;
+		-webkit-justify-content: inherit;
 	}
 `
 const Headings = styled.div`
