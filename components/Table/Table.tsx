@@ -19,13 +19,13 @@ import SearchBar from "material-ui-search-bar"
 
 export default function EnhancedTable() {
 	const [order, setOrder] = useState<Order>('asc')
-	const [orderBy, setOrderBy] = useState<keyof Employee>('firstname')
+	const [orderBy, setOrderBy] = useState<string>('firstname')
 	const [page, setPage] = useState(0)
 	const [rowsPerPage, setRowsPerPage] = useState(5)
 
 	const handleRequestSort = (
 		event: React.MouseEvent<unknown>,
-		property: keyof Employee
+		property: string
 	) => {
 		const isAsc = orderBy === property && order === 'asc'
 		setOrder(isAsc ? 'desc' : 'asc')
@@ -44,7 +44,7 @@ export default function EnhancedTable() {
 	}
 
 	const employees = useTsSelector(getEmployees)
-	const [rows, setRows] = useState<Employee[]>(employees)
+	const [rows, setRows] = useState(employees)
 	return (
 		<Box className={`${styles.bg} ${styles.center}`}>
 			<EnhancedTableToolbar rows={rows} setRows={setRows} />
@@ -58,37 +58,36 @@ export default function EnhancedTable() {
 					<TableBody>
 						{/* if you don't need to support IE11, you can replace the `stableSort` call with:
 						rows.sort(getComparator(order, orderBy)).slice() 
-						*/}
+						@ts-ignore*/}
 						{stableSort(rows, getComparator(order, orderBy))
 							.slice(
 								page * rowsPerPage,
 								page * rowsPerPage + rowsPerPage
 							)
-							.map((row) => {
-								return (
+							.map((row:any) => (
 									<TableRow
 										hover
 										tabIndex={-1}
-										key={`${row.firstname}-${row.lastname}`}
+										key={`${row?.firstname}-${row?.lastname}`}
 									>
-										<TableCell>{row.firstname}</TableCell>
-										<TableCell>{row.lastname}</TableCell>
+										<TableCell>{row?.firstname}</TableCell>
+										<TableCell>{row?.lastname}</TableCell>
 										<TableCell>
-											{row.startDate.toString()}
+											{row?.startDate.toString()}
 										</TableCell>
-										<TableCell>{row.department}</TableCell>
+										<TableCell>{row?.department}</TableCell>
 										<TableCell>
-											{row.dateOfBirth.toString()}
+											{row?.dateOfBirth.toString()}
 										</TableCell>
-										<TableCell>{row.street}</TableCell>
-										<TableCell>{row.city}</TableCell>
-										<TableCell>{row.state}</TableCell>
+										<TableCell>{row?.street}</TableCell>
+										<TableCell>{row?.city}</TableCell>
+										<TableCell>{row?.state}</TableCell>
 										<TableCell align="center">
-											{row.zipCode}
+											{row?.zipCode}
 										</TableCell>
 									</TableRow>
 								)
-							})}
+							)}
 					</TableBody>
 				</Table>
 			</TableContainer>
@@ -146,7 +145,7 @@ function stableSort<T>(
 
 interface HeadCell {
 	disablePadding: boolean
-	id: keyof Employee
+	id: string
 	label: string
 }
 
@@ -201,7 +200,7 @@ const headCells: readonly HeadCell[] = [
 interface EnhancedTableProps {
 	onRequestSort: (
 		event: React.MouseEvent<unknown>,
-		property: keyof Employee
+		property: string
 	) => void
 	order: Order
 	orderBy: string
@@ -210,7 +209,7 @@ interface EnhancedTableProps {
 function EnhancedTableHead(props: EnhancedTableProps) {
 	const { order, orderBy, onRequestSort } = props
 	const createSortHandler =
-		(property: keyof Employee) => (event: React.MouseEvent<unknown>) => {
+		(property: string) => (event: React.MouseEvent<unknown>) => {
 			onRequestSort(event, property)
 		}
 
@@ -247,19 +246,18 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 function EnhancedTableToolbar({rows, setRows}:any) {
 	const employees:Employee[] = useTsSelector(getEmployees)
 	const requestSearch = (searchedValue:string) => {
-		const filteredRows = employees.filter((row:Employee) => {			
-			return (
-				row.firstname.toLowerCase().includes(searchedValue.toLowerCase()) ||
-				row.lastname.toLowerCase().includes(searchedValue.toLowerCase()) ||
-				row.startDate.toLowerCase().includes(searchedValue.toLowerCase()) ||
-				row.department.toLowerCase().includes(searchedValue.toLowerCase()) ||
-				row.dateOfBirth.toLowerCase().includes(searchedValue.toLowerCase()) ||
-				row.street.toLowerCase().includes(searchedValue.toLowerCase()) ||
-				row.city.toLowerCase().includes(searchedValue.toLowerCase()) ||
-				row.state.toLowerCase().includes(searchedValue.toLowerCase()) ||
-				row.zipCode.toLowerCase().includes(searchedValue.toLowerCase())
+		const filteredRows = employees.filter((row:Employee) => (
+				row?.firstname.toLowerCase().includes(searchedValue.toLowerCase()) ||
+				row?.lastname.toLowerCase().includes(searchedValue.toLowerCase()) ||
+				row?.startDate.toLowerCase().includes(searchedValue.toLowerCase()) ||
+				row?.department.toLowerCase().includes(searchedValue.toLowerCase()) ||
+				row?.dateOfBirth.toLowerCase().includes(searchedValue.toLowerCase()) ||
+				row?.street.toLowerCase().includes(searchedValue.toLowerCase()) ||
+				row?.city.toLowerCase().includes(searchedValue.toLowerCase()) ||
+				row?.state.toLowerCase().includes(searchedValue.toLowerCase()) ||
+				row?.zipCode.toLowerCase().includes(searchedValue.toLowerCase())
 			)
-		})
+		)
 		setRows(filteredRows)		
 	}
 
