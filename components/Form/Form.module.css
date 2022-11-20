@@ -1,0 +1,6 @@
+.employee_form {
+	display: flex;
+    flex-direction: column;
+    width: 40%;
+    max-width: 500px;
+}
