@@ -1,6 +1,19 @@
 .employee_form {
 	display: flex;
-    flex-direction: column;
-    width: 40%;
-    max-width: 500px;
+	flex-direction: column;
+	margin: 1rem 0;
+	background: rgba(255, 255, 255, 0.45);
+	box-shadow: 0 8px 32px 0 rgb(31 38 135 / 37%);
+	backdrop-filter: blur(1.5px);
+	-webkit-backdrop-filter: blur(1.5px);
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	padding: 5px 1rem 10px;
+	width: 50%;
+	max-width: 400px;
+}
+@media screen and (max-width: 700px) {
+	.employee_form {
+		width: 90%;
+		margin: 2rem auto 1rem;
+	}
 }
