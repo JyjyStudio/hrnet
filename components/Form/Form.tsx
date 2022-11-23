@@ -1,130 +1,166 @@
-import { useEffect, useState } from 'react'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import styles from './Form.module.css'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { validationSchema } from './validationSchema'
 import DatePicker from './DatePicker'
-import DepartmentDropdown from './DepartmentDropdown'
 import StateDropdown from './StateDropdown'
-import Input from './Input'
-import styled from 'styled-components'
-import Modal from '../Modal/Modal'
+import DepartmentDropdown from './DepartmentDropdown'
+import { useState } from 'react'
 import { useTsDispatch } from '../../utils/redux/hooks'
-import { addEmployee, Employee } from '../../utils/features/employees/EmployeesSlice'
+import { addEmployee } from '../../utils/features/employees/EmployeesSlice'
+import Modal from '../Modal/Modal'
+import CustomizedMenus from '../Dropdown/DropdownV2'
 
-export default function Form() {
-	const [modal, setModal] = useState(false)
-	const [dateOfBirth, setDateOfBirth] = useState(new Date().toLocaleDateString())
-	const [startDate, setStartDate] = useState(new Date().toLocaleDateString())
-	const [state, setState] = useState('')
-	const [department, setDepartment] = useState('')
-
-	const dispatch = useTsDispatch()
-
-	const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
-		event.preventDefault()
-		setModal(true)
-		const data = new FormData(event.target)
-		const inputs = Object.fromEntries(data.entries())
-		//@ts-ignore
-		const newEmployee:Employee = {...inputs, dateOfBirth, startDate, state, department}
-		console.log('newEmployee:', newEmployee)
-		dispatch(addEmployee(newEmployee))
-	}
-
-	return (
-		<>
-			<StyledForm onSubmit={handleSubmit}>
-				<h2 style={{ textAlign: 'center' }}>Create Employee</h2>
-				<Input
-					type="text"
-					label="First Name"
-					name="firstname"
-					required
-				/>
-				<Input
-					type="text"
-					label="Last Name"
-					name="lastname"
-					required
-				/>
-				<DatePicker
-					value={dateOfBirth}
-					setFunction={setDateOfBirth}
-					label="date-of-birth"
-					maxDate={new Date()}
-					required
-				/>
-				<DatePicker
-					value={startDate}
-					setFunction={setStartDate}
-					label="start-date"
-					required
-					noWeekends
-				/>
-				<Fieldset>
-					<Input
-						type="text"
-						label="street"
-						name="street"
-						required
-					/>
-					<Legend>Address</Legend>
-					<Input
-						type="text"
-						label="city"
-						name="city"
-						required
-					/>
-					<StateDropdown setFunction={setState} />
-					<Input
-						type="number"
-						label="Zip Code"
-						name="zipCode"
-						min={0}
-						required
-					/>
-				</Fieldset>
-
-				<DepartmentDropdown setFunction={setDepartment} />
-				<SubmitBtn type="submit">Save</SubmitBtn>
-			</StyledForm>
-			{!!modal &&
-				<Modal setModal={setModal}>
-					Employee Created Successfully !
-				</Modal>
-			}
-		</>
-	)
+type Inputs = {
+	firstname: string
+	lastname: string
+	dateOfBirth: string
+	startDate: string
+	street: string
+	state: string
+	city: string
+	zipCode: string
+	department: string
 }
 
-const StyledForm = styled.form`
-	display: flex;
-	flex-direction: column;
-	margin: 1rem 0;
-	background: rgba(255, 255, 255, 0.45);
-	box-shadow: 0 8px 32px 0 rgb(31 38 135 / 37%);
-	backdrop-filter: blur(1.5px);
-	-webkit-backdrop-filter: blur(1.5px);
-	border: 1px solid rgba(255, 255, 255, 0.18);
-	padding: 5px 1rem 10px;
-	width: 50%;
-	max-width: 400px;
-	@media screen and (max-width: 700px) {
-		width: 90%;
-		margin: 2rem auto 1rem;
+export default function Form() {
+
+	const { register, setValue, handleSubmit, watch, formState: { errors }, reset } = useForm<Inputs>({resolver: yupResolver(validationSchema),})
+	const [modal, setModal] = useState(false)
+	const dispatch = useTsDispatch()
+	
+	const onSubmit: SubmitHandler<Inputs> = (newEmployee) => {
+		setModal(true)
+		console.log('newEmployee:', newEmployee)
+		dispatch(addEmployee(newEmployee))
+		reset()
 	}
-`
-const Fieldset = styled.fieldset`
-	margin-top: 6px;
-	padding: 5px 10px 10px;
-	border: 1px solid #8a2be270;
-	border-radius: 3px;
-`
-const Legend = styled.legend`
-	padding: 0 5px;
-	line-height: 1rem;
-`
-const SubmitBtn = styled.button`
-	margin-top: 1rem;
-	padding: 10px 0;
-	border: 1px solid lightgray;
-	border-radius: 5px;
-	cursor: pointer;
-`
+	// console.log('dateOfBirth:', watch('dateOfBirth')) // watch input value by passing the name of it
+	
+	return (
+	<>
+		{/* "handleSubmit" will validate inputs before invoking "onSubmit" */}
+		<form className={styles.employee_form} onSubmit={handleSubmit(onSubmit)}>
+			
+			{/* Firstname */}
+			<div className={styles.input_container}>
+				<label className={styles.label} htmlFor="firstname">First Name</label>
+				<small className={styles.error_msg} role="alert">{errors.firstname?.message}</small>
+				<input
+					id='firstname'
+					className={errors.firstname && styles.input_error}
+					aria-invalid={errors.firstname ? "true" : "false"}
+					{...register('firstname', {
+						pattern: /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/g,
+						required: true
+					})}
+				/>
+			</div>
+			{/* Lastname */}
+			<div className={styles.input_container}>
+				<label className={styles.label} htmlFor="lastname">Last Name</label>
+				<small className={styles.error_msg} role="alert">{errors.lastname?.message}</small>
+				<input
+					id='lastname'
+					className={errors.lastname && styles.input_error}
+					aria-invalid={errors.lastname ? "true" : "false"}
+					{...register('lastname', { required: true })} 
+				/>
+			</div>
+			{/* Date of birth */}
+			<div className={styles.input_container}>
+				<label className={styles.label} htmlFor="dateOfBirth">Date Of Birth</label>
+				<small className={styles.error_msg} role="alert">{errors.dateOfBirth?.message}</small>
+				<DatePicker
+					error={errors.dateOfBirth}
+					aria-invalid={errors.dateOfBirth ? "true" : "false"}
+					maxDate={new Date()}
+					onChange={(val:string) => {
+						setValue("dateOfBirth", val)
+						register("dateOfBirth", { required: true })
+					}}
+				/>
+			</div>
+			{/* Start Date */}
+			<div className={styles.input_container}>
+				<label className={styles.label} htmlFor="startDate">Start Date</label>
+				<small className={styles.error_msg} role="alert">{errors.startDate?.message}</small>
+				<DatePicker
+					error={errors.startDate}
+					aria-invalid={errors.startDate ? "true" : "false"}
+					noWeekends
+					onChange={(val:string) => {
+						setValue("startDate", val)
+						register("startDate", { required: true })
+					}}
+				/>
+			</div>
+			<fieldset className={styles.employee_form__fieldset}>
+				<legend className={styles.employee_form__legend}>Adress</legend>
+				
+				{/* Street */}
+				<div className={styles.input_container}>
+					<label className={styles.label} htmlFor="street">Street</label>
+					<small className={styles.error_msg} role="alert">{errors.street?.message}</small>
+					<input
+						id='street'
+						className={errors.street && styles.input_error}
+						aria-invalid={errors.street ? "true" : "false"}
+						{...register('street', { required: true })} 
+					/>
+				</div>
+				{/* City */}
+				<div className={styles.input_container}>
+					<label className={styles.label} htmlFor="city">City</label>
+					<small className={styles.error_msg} role="alert">{errors.city?.message}</small>
+					<input
+						id='city'
+						className={errors.city && styles.input_error}
+						aria-invalid={errors.city ? "true" : "false"}
+						{...register('city', { required: true })} 
+					/>
+				</div>
+				{/* State Dropdown */}
+				<div className={styles.input_container}>
+					<label className={styles.label} htmlFor="state">State</label>
+					<small className={styles.error_msg} role="alert">{errors.state?.message}</small>
+					<StateDropdown 
+						onChange={(value:{value:string}) => {
+							console.log('change!', value)
+							setValue("state", value.value)
+							register('state', { required: true })
+						}}
+					/>
+					<CustomizedMenus />
+				</div>
+				{/* zipCode */}
+				<div className={styles.input_container}>
+					<label className={styles.label} htmlFor="zipCode">Zip Code</label>
+					<small className={styles.error_msg} role="alert">{errors.zipCode?.message}</small>
+					<input
+						id='zipCode'
+						className={errors.zipCode && styles.input_error}
+						aria-invalid={errors.zipCode ? "true" : "false"}
+						{...register('zipCode', { required: true })} 
+					/>
+				</div>
+			</fieldset>
+			{/* Department Dropdown */}
+			<div className={styles.input_container}>
+				<label className={styles.label} htmlFor="department">Department</label>
+				<small className={styles.error_msg} role="alert">{errors.department?.message}</small>
+				<DepartmentDropdown 
+					onChange={(value:{value:string}) => {
+						register("department", { required: true, min: 0 })
+						setValue("department", value.value)
+					}}
+				/>
+			</div>
+			<input className={styles.employee_form__submit} type="submit" />
+		</form>
+
+		{/* modal */}
+		{ !!modal && <Modal setModal={setModal}>Employee Created Successfully !</Modal> }
+	</>
+	)
+}
