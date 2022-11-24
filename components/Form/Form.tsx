@@ -9,7 +9,6 @@ import { useState } from 'react'
 import { useTsDispatch } from '../../utils/redux/hooks'
 import { addEmployee } from '../../utils/features/employees/EmployeesSlice'
 import Modal from '../Modal/Modal'
-import CustomizedMenus from '../Dropdown/DropdownV2'
 
 type Inputs = {
 	firstname: string
@@ -131,7 +130,6 @@ export default function Form() {
 							register('state', { required: true })
 						}}
 					/>
-					<CustomizedMenus />
 				</div>
 				{/* zipCode */}
 				<div className={styles.input_container}>
