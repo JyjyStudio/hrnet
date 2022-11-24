@@ -1,7 +1,7 @@
 import Dropdown from "../Dropdown/Dropdown"
 import { SetStateAction } from "react"
 
-export default function StateDropdown({ setFunction }:Props) {
+export default function StateDropdown({ onChange }:Props) {
 		
 	const states: Array<string> = [
 		'Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut',
@@ -14,10 +14,10 @@ export default function StateDropdown({ setFunction }:Props) {
 		'Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming'
 	]
 
-  return <Dropdown options={states} setFunction={setFunction} placeholder="Select a state" />
+  return <Dropdown options={states} onChange={onChange} placeholder="Select a state" />
 
 }
 
 interface Props {
-	setFunction: React.Dispatch<SetStateAction<string>>
+	onChange: Function
 }

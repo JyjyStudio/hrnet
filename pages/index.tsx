@@ -31,10 +31,11 @@ const Container = styled.main`
 	display: flex;
 	max-width: 1000px;
     margin: 0 auto;
-    -webkit-justify-content: space-around;
+    justify-content: space-around;
+	align-items: center;
 	@media screen and (max-width: 700px) {
 		flex-direction: column;
-		-webkit-justify-content: inherit;
+		justify-content: inherit;
 	}
 `
 const Headings = styled.div`

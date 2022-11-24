@@ -34,8 +34,16 @@ input {
 	border: none !important;
 	background: rgba(255,255,255,0.5);
 }
-label {
-	margin: 3px 0;
+
+// datepicker
+.rmdp-container {
+	flex: 0 1 100%;
+}
+.rmdp-container.datepicker {
+	flex: 0 1 100%;
+}
+.rmdp-container.error input {
+	border: 2px #c5245e solid !important;
 }
 
 @media screen and (max-width: 700px) {

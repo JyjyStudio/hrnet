@@ -4,9 +4,8 @@ import { GiHumanPyramid } from "react-icons/gi"
 import { GoLaw } from "react-icons/go"
 import Dropdown from "../Dropdown/Dropdown"
 import styled from 'styled-components'
-import { SetStateAction } from "react"
 
-export default function DepartmentDropdown({ setFunction }:Props) {
+export default function DepartmentDropdown({ onChange }:Props) {
 		
 	const departments: Array<{id: string, value:string, view: any}> = [
 		{ id: '1', value: "Sales", view: <LabelContainer><FcSalesPerformance /><span>Sales</span></LabelContainer>},
@@ -16,7 +15,7 @@ export default function DepartmentDropdown({ setFunction }:Props) {
 		{ id: '5', value: "Legal", view: <LabelContainer><GoLaw color="#f48024"/><span>Legal</span></LabelContainer>},
 	]
 
-  return <Dropdown options={departments} setFunction={setFunction} placeholder="Select a department" />
+  return <Dropdown options={departments} onChange={onChange} placeholder="Select a department" />
 
 }
 
@@ -29,5 +28,5 @@ const LabelContainer = styled.div`
 	}
 `
 interface Props {
-	setFunction: React.Dispatch<SetStateAction<string>>
+	onChange: Function
 }

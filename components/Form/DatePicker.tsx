@@ -1,19 +1,14 @@
 import ElementPopper from "react-element-popper"
 import transition from "react-element-popper/animations/transition"
+import { FieldError } from "react-hook-form"
 import DatePicker, { DateObject } from "react-multi-date-picker"
 import InputIcon from "react-multi-date-picker/components/input_icon"
 
-export default function DPicker({ label, maxDate, value, setFunction, noWeekends }: Props) {
-	
-	const formatLabel = (label: string) => label.split('-').map((word) => word.charAt(0).toUpperCase() + word.slice(1) + ' ')
-	
-	return (
-	<>
-		<label htmlFor={label}>{formatLabel(label)}</label>
+export default function DPicker({ onChange, maxDate, noWeekends, error }: Props) {
+	return 	(
 		<DatePicker
-			value={value}
-			onChange={ (dateObject:DateObject) => setFunction(dateObject.format()) }
-			id={label}
+			containerClassName={error ? "datepicker error" : "datepicker"}
+			onChange={(dateObject:DateObject) => onChange(dateObject.format()) }
 			maxDate={maxDate && maxDate}
 			format="MM/DD/YYYY"
 			editable={false}
@@ -29,15 +24,12 @@ export default function DPicker({ label, maxDate, value, setFunction, noWeekends
 				return props
 			}}
 		/>
-	</>
 	)
 }
 
 interface Props {
-	label: string
+	onChange: Function
 	maxDate?: Date
-	required?: boolean
-	setFunction: Function
 	noWeekends?: boolean
-	value: string
+	error?: FieldError | undefined
 }
