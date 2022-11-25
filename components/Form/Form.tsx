@@ -124,9 +124,8 @@ export default function Form() {
 					<label className={styles.label} htmlFor="state">State</label>
 					<small className={styles.error_msg} role="alert">{errors.state?.message}</small>
 					<StateDropdown 
-						onChange={(value:{value:string}) => {
-							console.log('change!', value)
-							setValue("state", value.value)
+						onChange={(value:string) => {
+							setValue("state", value)
 							register('state', { required: true })
 						}}
 					/>
@@ -148,9 +147,9 @@ export default function Form() {
 				<label className={styles.label} htmlFor="department">Department</label>
 				<small className={styles.error_msg} role="alert">{errors.department?.message}</small>
 				<DepartmentDropdown 
-					onChange={(value:{value:string}) => {
+					onChange={(value:string) => {
 						register("department", { required: true, min: 0 })
-						setValue("department", value.value)
+						setValue("department", value)
 					}}
 				/>
 			</div>
