@@ -1,75 +1,17 @@
-/* different background on hover for each option */
-.styled_Dropdown [role='option']:nth-child(n):hover {
-	background: #000;
-}
-.styled_Dropdown [role='option']:nth-child(2n):hover {
-	background: #ea4c89;
-}
-.styled_Dropdown [role='option']:nth-child(3n):hover {
-	background: #0057ff;
-}
-.styled_Dropdown [role='option']:nth-child(4n):hover {
-	background: #32c766;
-}
-.styled_Dropdown [role='option']:nth-child(5n):hover {
-	background: #f48024;
-}
-
-/* white svg color on hover */
-.styled_Dropdown [role='option']:hover svg {
-	color: #fff;
-}
-/* menu open to the top */
-.styled_Dropdown [data-testid='dropdown-menu'] {
-	top: inherit !important;
-	bottom: 100%;
-	max-height: 230px !important;
-}
-/* white text color on hover + fade animation */
-.styled_Dropdown [role='option']:hover {
-	color: #fff;
-	animation: fade 400ms ease;
-}
-.styled_Dropdown [role='option']:hover svg {
-	color: white !important;
-}
-@keyframes fade {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
-}
-/* little margin top and border radius */
-.styled_Dropdown[data-testid='dropdown-root'] {
-	margin-top: 1rem;
-}
-.styled_Dropdown[data-testid='dropdown-control'] {
+.dropdown_container {
+	width: 100%;
+} 
+.dropdown_container button {
+	border: 1px solid #ccc;
 	border-radius: 3px;
+    justify-content: space-between;
+    text-transform: inherit;
+	background-color: white;
+    color: #4e4e4e;
+	font-size: 15px;
+	font-family: inherit;
+	padding: 6px 10px;
 }
-
-/* scrollbar */
-.styled_Dropdown::-webkit-scrollbar-track {
-	background-color: #f5f5f5;
-}
-
-.styled_Dropdown::-webkit-scrollbar {
-	width: 8px;
-	background-color: #f5f5f5;
-}
-
-.styled_Dropdown::-webkit-scrollbar-thumb {
-	background-color: #0ae;
-	max-height: 50%;
-	height: 50%;
-	/* border-radius: 3px 0 0 3px; */
-	background-image: -webkit-gradient(
-		linear,
-		0 0,
-		0 100%,
-		color-stop(0.6, rgba(255, 255, 255, 0.2)),
-		color-stop(0.5, transparent),
-		to(transparent)
-	);
+.dropdown_container button:hover {
+	background-color: white;
 }
