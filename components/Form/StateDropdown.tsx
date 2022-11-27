@@ -1,5 +1,4 @@
-import Dropdown from "../Dropdown/Dropdown"
-import { SetStateAction } from "react"
+import CustomizedMenus from "../Dropdown/Dropdown"
 
 export default function StateDropdown({ onChange }:Props) {
 		
@@ -14,7 +13,7 @@ export default function StateDropdown({ onChange }:Props) {
 		'Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming'
 	]
 
-  return <Dropdown options={states} onChange={onChange} placeholder="Select a state" />
+  return <CustomizedMenus options={states} onChange={onChange} defaultPlaceholder="Select a state" scrollable />
 
 }
 
