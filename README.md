@@ -7,7 +7,7 @@ I had to refactor an [old JQuery site](https://github.com/OpenClassrooms-Student
 **Useful links:**
 - [Live demo 🌍](https://jyjystudio.github.io/hrnet) 
 - [HRnet repository 📖](https://github.com/JyjyStudio/hrnet)
-- [Modal plugin repository 📖](https://https://github.com/JyjyStudio/npm-modal-package)
+- [Modal plugin repository 📖](https://github.com/JyjyStudio/npm-modal-package)
 - [Storybook](https://jyjystudio.github.io/npm-modal-package)
 
 ## Installation
