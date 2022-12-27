@@ -5,10 +5,11 @@ import { validationSchema } from './validationSchema'
 import DatePicker from '../Datepicker/DatePicker'
 import StateDropdown from '../Dropdown/StateDropdown'
 import DepartmentDropdown from '../Dropdown/DepartmentDropdown'
-import { useState } from 'react'
-import { useTsDispatch } from '../../utils/redux/hooks'
-import { addEmployee } from '../../utils/features/employees/EmployeesSlice'
-import Modal from '../Modal/Modal'
+import { useTsDispatch } from '../../utils/store/hooks'
+import { addEmployee, Employee } from '../../utils/store/employees/EmployeesSlice'
+import Modal from 'simple-react-modal-plugin'
+// import Modal from '../Modal/Modal'
+import useModal from '../Modal/useModal'
 
 type Inputs = {
 	firstname: string
@@ -23,19 +24,12 @@ type Inputs = {
 }
 
 export default function Form() {
-	const {
-		register,
-		setValue,
-		handleSubmit,
-		watch,
-		formState: { errors },
-		reset,
-	} = useForm<Inputs>({ resolver: yupResolver(validationSchema) })
-	const [modal, setModal] = useState(false)
+	const { register, setValue, handleSubmit, formState: { errors }, reset } = useForm<Inputs>({ resolver: yupResolver(validationSchema) })
+	const { visible, toggle } = useModal()
 	const dispatch = useTsDispatch()
 
-	const onSubmit: SubmitHandler<Inputs> = (newEmployee) => {
-		setModal(true)
+	const onSubmit: SubmitHandler<Inputs> = (newEmployee: Employee) => {
+		toggle()
 		console.log('newEmployee:', newEmployee)
 		dispatch(addEmployee(newEmployee))
 		reset()
@@ -204,11 +198,9 @@ export default function Form() {
 			</form>
 
 			{/* modal */}
-			{!!modal && (
-				<Modal setModal={setModal}>
-					Employee Created Successfully !
-				</Modal>
-			)}
+			<Modal visible={visible} hide={toggle}>
+				Employee Created Successfully !
+			</Modal>
 		</>
 	)
 }
