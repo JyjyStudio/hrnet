@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 //creation d'une partie de notre store (slice). Contient le nom du slice, son state initial et les reducers
-const initialState: Employee[] = []
+const initialState: Array<Employee> = []
 
 export const employeesSlice = createSlice({
 	name: 'employees',
