@@ -4,7 +4,8 @@ import BgImage from '/public/assets/Abstract-Gradient-5.png'
 import styled from 'styled-components'
 import type { AppProps } from 'next/app'
 import { Provider } from 'react-redux'
-import { store } from '../utils/redux/store'
+import { PersistGate } from "redux-persist/integration/react"
+import { store, persistor } from '../utils/store/store'
 import '../utils/styles/globals.css'
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -24,7 +25,9 @@ export default function App({ Component, pageProps }: AppProps) {
 				/>
 			</BgContainer>
 			<Provider store={store}>
-				<Component {...pageProps} />
+				<PersistGate loading={null} persistor={persistor}>
+					<Component {...pageProps} />
+				</PersistGate>
 			</Provider>
 		</>
 	)
