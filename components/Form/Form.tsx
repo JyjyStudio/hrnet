@@ -6,10 +6,11 @@ import DatePicker from '../Datepicker/DatePicker'
 import StateDropdown from '../Dropdown/StateDropdown'
 import DepartmentDropdown from '../Dropdown/DepartmentDropdown'
 import { useTsDispatch } from '../../utils/store/hooks'
-import { addEmployee, Employee } from '../../utils/store/employees/EmployeesSlice'
+import { addEmployee } from '../../utils/store/employees/EmployeesSlice'
 import Modal from 'simple-react-modal-plugin'
 // import Modal from '../Modal/Modal'
 import useModal from '../Modal/useModal'
+import { nanoid } from '@reduxjs/toolkit'
 
 type Inputs = {
 	firstname: string
@@ -21,6 +22,7 @@ type Inputs = {
 	city: string
 	zipCode: string
 	department: string
+	id: string
 }
 
 export default function Form() {
@@ -28,8 +30,9 @@ export default function Form() {
 	const { visible, toggle } = useModal()
 	const dispatch = useTsDispatch()
 
-	const onSubmit: SubmitHandler<Inputs> = (newEmployee: Employee) => {
+	const onSubmit: SubmitHandler<Inputs> = (newEmployee: Inputs) => {
 		toggle()
+		newEmployee.id = nanoid(8)
 		console.log('newEmployee:', newEmployee)
 		dispatch(addEmployee(newEmployee))
 		reset()
@@ -86,6 +89,7 @@ export default function Form() {
 						{errors.dateOfBirth?.message}
 					</small>
 					<DatePicker
+						id='dateOfBirth'
 						error={errors.dateOfBirth}
 						aria-invalid={errors.dateOfBirth ? 'true' : 'false'}
 						maxDate={new Date()}
@@ -104,6 +108,7 @@ export default function Form() {
 						{errors.startDate?.message}
 					</small>
 					<DatePicker
+						id='dateOfBirth'
 						error={errors.startDate}
 						aria-invalid={errors.startDate ? 'true' : 'false'}
 						noWeekends
