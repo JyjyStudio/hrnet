@@ -1,96 +1,98 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
-import Table from '@mui/material/Table'
+import DefaultTable from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
-import TableSortLabel from '@mui/material/TableSortLabel'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
-import { visuallyHidden } from '@mui/utils'
+import { useTsDispatch, useTsSelector } from '../../utils/store/hooks'
+import { getEmployees } from '../../utils/store/employees/selectors'
 import styles from './Table.module.css'
-import { useTsSelector } from '../../utils/redux/hooks'
-import { getEmployees } from '../../utils/features/employees/selectors'
-import { Employee } from '../../utils/features/employees/EmployeesSlice'
-import SearchBar from "material-ui-search-bar"
+import { FiEdit } from 'react-icons/fi'
+import { RiDeleteBin5Line } from 'react-icons/ri'
+import { deleteEmployee, Employee } from '../../utils/store/employees/EmployeesSlice'
+import { Order } from "./types"
+import { TableHead, SearchBar, stableSort, getComparator } from './TableHead'
+import styled from 'styled-components'
 
-export default function EnhancedTable() {
+export default function Table() {
 	const [order, setOrder] = useState<Order>('asc')
-	const [orderBy, setOrderBy] = useState<string>('firstname')
+	const [orderBy, setOrderBy] = useState('firstname')
 	const [page, setPage] = useState(0)
 	const [rowsPerPage, setRowsPerPage] = useState(5)
+	const [isEditing, setIsEditing] = useState(false)
+	const dispatch = useTsDispatch()
+	
+	const employees = useTsSelector(getEmployees)
+	const [rows, setRows] = useState(employees)
 
-	const handleRequestSort = (
-		event: React.MouseEvent<unknown>,
-		property: string
-	) => {
+	/* Re rendering when editing or deleting an employee */
+	useEffect(() => {
+		setRows(employees)
+	}, [employees])
+
+	/* sort the content by clicking on the arrow */
+	const handleRequestSort = (event: React.MouseEvent<unknown>, property: string) => {
 		const isAsc = orderBy === property && order === 'asc'
 		setOrder(isAsc ? 'desc' : 'asc')
 		setOrderBy(property)
 	}
-
+	/* Pagination */
 	const handleChangePage = (event: unknown, newPage: number) => {
 		setPage(newPage)
 	}
-
-	const handleChangeRowsPerPage = (
-		event: React.ChangeEvent<HTMLInputElement>
-	) => {
+	const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setRowsPerPage(parseInt(event.target.value, 10))
 		setPage(0)
 	}
+	/**Sure about deleting an employee? */
+	const handleDelete = (id:string, firstname:string) => confirm(`are u sure to delete ${firstname} ?`) && dispatch(deleteEmployee(id))
 
-	const employees = useTsSelector(getEmployees)
-	const [rows, setRows] = useState(employees)
 	return (
 		<Box className={`${styles.bg} ${styles.center}`}>
-			<EnhancedTableToolbar rows={rows} setRows={setRows} />
+			<SearchBar rows={rows} setRows={setRows} />
 			<TableContainer>
-				<Table sx={{ minWidth: 500 }} aria-labelledby="employees">
-					<EnhancedTableHead
+				<DefaultTable sx={{ minWidth: 500 }} aria-labelledby="employees">
+					<TableHead
 						order={order}
 						orderBy={orderBy}
 						onRequestSort={handleRequestSort}
 					/>
 					<TableBody>
-						{/* if you don't need to support IE11, you can replace the `stableSort` call with:
-						rows.sort(getComparator(order, orderBy)).slice() 
-						@ts-ignore*/}
 						{stableSort(rows, getComparator(order, orderBy))
-							.slice(
-								page * rowsPerPage,
-								page * rowsPerPage + rowsPerPage
-							)
-							.map((row:any) => (
-									<TableRow
-										hover
-										tabIndex={-1}
-										key={`${row?.firstname}-${row?.lastname}`}
-									>
-										<TableCell>{row?.firstname}</TableCell>
-										<TableCell>{row?.lastname}</TableCell>
-										<TableCell>
-											{row?.startDate.toString()}
-										</TableCell>
-										<TableCell>{row?.department}</TableCell>
-										<TableCell>
-											{row?.dateOfBirth.toString()}
-										</TableCell>
-										<TableCell>{row?.street}</TableCell>
-										<TableCell>{row?.city}</TableCell>
-										<TableCell>{row?.state}</TableCell>
-										<TableCell align="center">
-											{row?.zipCode}
-										</TableCell>
-									</TableRow>
-								)
-							)}
+							.slice( page * rowsPerPage, page * rowsPerPage + rowsPerPage )
+							.map((row) => (
+								<TableRow
+									hover
+									tabIndex={-1}
+									key={`${row?.firstname}-${row?.lastname}`}
+								>
+									<TableCell>{isEditing? <input type="text"/> : row.firstname}</TableCell>
+									<TableCell>{row.lastname}</TableCell>
+									<TableCell>
+										{row.startDate.toString()}
+									</TableCell>
+									<TableCell>{row.department}</TableCell>
+									<TableCell>
+										{row.dateOfBirth.toString()}
+									</TableCell>
+									<TableCell>{row.street}</TableCell>
+									<TableCell>{row.city}</TableCell>
+									<TableCell>{row.state}</TableCell>
+									<TableCell align="center">
+										{row.zipCode}
+									</TableCell>
+									<TableCell>
+										<EditBtn onClick={() => alert(`edit user ${row.id}`)} /> 
+										<DeleteBtn onClick={() => handleDelete(row.id, row.firstname)} />
+									</TableCell>
+								</TableRow>
+							))}
 					</TableBody>
-				</Table>
+				</DefaultTable>
 			</TableContainer>
+			{/* Footer Table Pagination */}
 			<TablePagination
 				rowsPerPageOptions={[5, 10, 25]}
 				component="div"
@@ -104,196 +106,15 @@ export default function EnhancedTable() {
 	)
 }
 
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-	if (b[orderBy] < a[orderBy]) {
-		return -1
-	}
-	if (b[orderBy] > a[orderBy]) {
-		return 1
-	}
-	return 0
-}
-
-type Order = 'asc' | 'desc'
-
-function getComparator<Key extends keyof any>(
-	order: Order,
-	orderBy: Key
-): (
-	a: { [key in Key]: number | string },
-	b: { [key in Key]: number | string }
-) => number {
-	return order === 'desc'
-		? (a, b) => descendingComparator(a, b, orderBy)
-		: (a, b) => -descendingComparator(a, b, orderBy)
-}
-
-function stableSort<T>(
-	array: readonly T[],
-	comparator: (a: T, b: T) => number
-) {
-	const stabilizedThis = array.map((el, index) => [el, index] as [T, number])
-	stabilizedThis.sort((a, b) => {
-		const order = comparator(a[0], b[0])
-		if (order !== 0) {
-			return order
-		}
-		return a[1] - b[1]
-	})
-	return stabilizedThis.map((el) => el[0])
-}
-
-interface HeadCell {
-	disablePadding: boolean
-	id: string
-	label: string
-}
-
-const headCells: readonly HeadCell[] = [
-	{
-		id: 'firstname',
-		disablePadding: false,
-		label: 'First Name',
-	},
-	{
-		id: 'lastname',
-		disablePadding: false,
-		label: 'Last Name',
-	},
-	{
-		id: 'startDate',
-		disablePadding: false,
-		label: 'Start Date',
-	},
-	{
-		id: 'department',
-		disablePadding: false,
-		label: 'Department',
-	},
-	{
-		id: 'dateOfBirth',
-		disablePadding: false,
-		label: 'Date Of Birth',
-	},
-	{
-		id: 'street',
-		disablePadding: false,
-		label: 'street',
-	},
-	{
-		id: 'city',
-		disablePadding: false,
-		label: 'City',
-	},
-	{
-		id: 'state',
-		disablePadding: false,
-		label: 'State',
-	},
-	{
-		id: 'zipCode',
-		disablePadding: false,
-		label: 'ZipCode',
-	},
-]
-
-interface EnhancedTableProps {
-	onRequestSort: (
-		event: React.MouseEvent<unknown>,
-		property: string
-	) => void
-	order: Order
-	orderBy: string
-}
-
-function EnhancedTableHead(props: EnhancedTableProps) {
-	const { order, orderBy, onRequestSort } = props
-	const createSortHandler =
-		(property: string) => (event: React.MouseEvent<unknown>) => {
-			onRequestSort(event, property)
-		}
-
-	return (
-		<TableHead>
-			<TableRow>
-				{headCells.map((headCell) => (
-					<TableCell
-						key={headCell.id}
-						padding={headCell.disablePadding ? 'none' : 'normal'}
-						sortDirection={orderBy === headCell.id ? order : false}
-					>
-						<TableSortLabel
-							active={orderBy === headCell.id}
-							direction={orderBy === headCell.id ? order : 'asc'}
-							onClick={createSortHandler(headCell.id)}
-						>
-							{headCell.label}
-							{orderBy === headCell.id ? (
-								<Box component="span" sx={visuallyHidden}>
-									{order === 'desc'
-										? 'sorted descending'
-										: 'sorted ascending'}
-								</Box>
-							) : null}
-						</TableSortLabel>
-					</TableCell>
-				))}
-			</TableRow>
-		</TableHead>
-	)
-}
-
-function EnhancedTableToolbar({rows, setRows}:any) {
-	const employees:Employee[] = useTsSelector(getEmployees)
-	const requestSearch = (searchedValue:string) => {
-		const filteredRows = employees.filter((row:Employee) => (
-				row?.firstname.toLowerCase().includes(searchedValue.toLowerCase()) ||
-				row?.lastname.toLowerCase().includes(searchedValue.toLowerCase()) ||
-				row?.startDate.toLowerCase().includes(searchedValue.toLowerCase()) ||
-				row?.department.toLowerCase().includes(searchedValue.toLowerCase()) ||
-				row?.dateOfBirth.toLowerCase().includes(searchedValue.toLowerCase()) ||
-				row?.street.toLowerCase().includes(searchedValue.toLowerCase()) ||
-				row?.city.toLowerCase().includes(searchedValue.toLowerCase()) ||
-				row?.state.toLowerCase().includes(searchedValue.toLowerCase()) ||
-				row?.zipCode.toLowerCase().includes(searchedValue.toLowerCase())
-			)
-		)
-		setRows(filteredRows)		
-	}
-
-	const cancelSearch = () => {
-		requestSearch("")		
-	}
-	
-	return (
-		<Toolbar
-			sx={{
-				pl: { sm: 2 },
-				pr: { xs: 1, sm: 1 },
-			}}
-			className='mobile'
-		>
-			<Typography
-				sx={{ flex: '1 1 100%' }}
-				variant="h6"
-				id="tableTitle"
-				component="h2"
-			>
-				Employees
-			</Typography>
-			<SearchBar
-				className={styles.bg}
-				onChange={(searchedValue) => requestSearch(searchedValue)}
-				onCancelSearch={cancelSearch}
-				style={{
-					minWidth: 300,
-					height: '40px', 
-					background:'inherit',
-					padding: '5px 010px 1rem'
-				}}
-				placeholder="Search an employee"
-				cancelOnEscape
-			/>
-		</Toolbar>
-	)
-}
+const EditBtn = styled(FiEdit)`
+	color: orange;
+	cursor: pointer;
+	font-size: 1.2rem;
+	margin: 0 5px;
+`
+const DeleteBtn = styled(RiDeleteBin5Line)`
+	color: red;
+	cursor: pointer;
+	font-size: 1.2rem;
+	margin: 0 5px;
+`
