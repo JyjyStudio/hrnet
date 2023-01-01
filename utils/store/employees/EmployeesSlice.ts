@@ -37,11 +37,15 @@ export const employeesSlice = createSlice({
 		},
 		deleteEmployee: (state, action: PayloadAction<string>) => {
 			return state.filter(employee => JSON.parse(JSON.stringify(employee.id)) !== action.payload)
-		}
+		},
+		editEmployee: (state, action: PayloadAction<Employee>) => {
+			const index = JSON.parse(JSON.stringify(state)).findIndex((employee:Employee) => employee.id == action.payload.id)
+			state[index] = action.payload
+		},
 	},
 })
 
-export const { addEmployee, deleteEmployee } = employeesSlice.actions 
+export const { addEmployee, deleteEmployee, editEmployee } = employeesSlice.actions 
 
 export type Employee = {
 	firstname: string
