@@ -13,9 +13,9 @@ export default function list() {
 				<title>HRNET - Employees</title>
 			</Head>
 			<StyledTitle>
-				<Link href="/">
-					<KeyboardBackspaceIcon /> Add a new employee
-				</Link>
+				<StyledLink href="/">
+					<ArrowLeftIcon /> Add a new employee
+				</StyledLink>
 			</StyledTitle>
 			<EmployeesTable />
 		</>
@@ -23,7 +23,12 @@ export default function list() {
 }
 
 const StyledTitle = styled.h2`
-	position: absolute;
-	top: 20%;
-	left: 5%;
+	padding: 5%;
 ` 
+const StyledLink = styled(Link)`
+	display: flex;
+    align-items: center;
+`
+const ArrowLeftIcon = styled(KeyboardBackspaceIcon)`
+	margin-right: 5px;
+`
