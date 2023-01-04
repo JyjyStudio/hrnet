@@ -3,10 +3,10 @@ import * as Yup from 'yup'
 export const validationSchema = Yup.object().shape({
 	firstname: Yup.string()
 		.required('This field is required')
-		.matches(/^[a-z-éèêëçäà]+[ \-']?[[a-z]+[ \-']?]*[a-z-éèêëçäà]+$/gi, 'verifiez votre saisie'),
+		.matches(/^[a-z-éèêëçäà]+[ \-']?[[a-z]+[ \-']?]*[a-z-éèêëçäà]+$/gi, 'Check your input'),
 	lastname: Yup.string()
 		.required("This field is required")
-		.matches(/^[a-z-éèêëçäà]+[ \-']?[[a-z]+[ \-']?]*[a-z-éèêëçäà]+$/gi, 'verifiez votre saisie'),
+		.matches(/^[a-z-éèêëçäà]+[ \-']?[[a-z]+[ \-']?]*[a-z-éèêëçäà]+$/gi, 'Check your input'),
 	dateOfBirth: Yup.string()
 		.required('This field is required'),
 	startDate: Yup.string()
@@ -19,7 +19,7 @@ export const validationSchema = Yup.object().shape({
 		.required('This field is required'),
 	zipCode: Yup.string()
 		.required('This field is required')
-		.matches(/^[0-9]*$/, 'verifiez votre saisie'),
+		.matches(/^[0-9]*$/, 'Check your input'),
 	department: Yup.string()
 		.required('This field is required'),
 })
