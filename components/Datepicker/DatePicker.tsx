@@ -4,11 +4,10 @@ import { FieldError } from "react-hook-form"
 import DatePicker, { DateObject } from "react-multi-date-picker"
 import InputIcon from "react-multi-date-picker/components/input_icon"
 
-export default function DPicker({ onChange, maxDate, noWeekends, error }: Props) {
+export default function DPicker({ onChange, maxDate, noWeekends, error, value="" }: Props) {
 	return 	(
 		<DatePicker
 			containerClassName={error ? "datepicker error" : "datepicker"}
-			onChange={(dateObject:DateObject) => onChange(dateObject.format()) }
 			maxDate={maxDate && maxDate}
 			format="MM/DD/YYYY"
 			editable={false}
@@ -23,6 +22,8 @@ export default function DPicker({ onChange, maxDate, noWeekends, error }: Props)
 				if (isWeekend && noWeekends) props.className = "highlight highlight-red"
 				return props
 			}}
+			onChange={(dateObject:DateObject) => onChange(dateObject.format()) }
+			value={value}
 		/>
 	)
 }
@@ -32,4 +33,5 @@ interface Props {
 	maxDate?: Date
 	noWeekends?: boolean
 	error?: FieldError | undefined
+	value: string
 }
