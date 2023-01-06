@@ -11,7 +11,7 @@ export const Modal: React.FC<Props> = ({
 	hide,
 }) => {
 	const handleKeyDown = useCallback((e:KeyboardEvent) => {
-		if(e.key === 'Escape') {
+		if(e.key === 'Escape' && visible) {
 			hide()
 		}
 	}, [hide])
