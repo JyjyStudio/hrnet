@@ -6,7 +6,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import Slide from '@mui/material/Slide'
 import styles from './Dropdown.module.css'
 
-export default function CustomizedMenus({ options, onChange, defaultPlaceholder, scrollable }: Props) {
+export default function CustomizedMenus({ error, options, onChange, defaultPlaceholder, scrollable }: Props) {
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 	const [placeHolder, setPlaceholder] = useState<string>(defaultPlaceholder)
@@ -27,6 +27,8 @@ export default function CustomizedMenus({ options, onChange, defaultPlaceholder,
 	return (
 		<div className={styles.dropdown_container}>
 			<Button
+				// className={error ? "error" : ""}
+				className={error ? styles.input_error : ""}
 				id="dropdown-button"
 				aria-controls={open ? 'dropdown-menu' : undefined}
 				aria-haspopup="true"
@@ -76,6 +78,7 @@ export default function CustomizedMenus({ options, onChange, defaultPlaceholder,
 
 interface Option { id: string, value: string, view: any }
 interface Props {
+	error: boolean
 	options: Array<Option> | Array<string>
 	defaultPlaceholder: string
 	onChange: Function

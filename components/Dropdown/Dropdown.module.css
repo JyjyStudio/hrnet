@@ -15,3 +15,6 @@
 .dropdown_container button:hover {
 	background-color: white;
 }
+.input_error {
+	border: 2px #c5245e solid !important;
+}

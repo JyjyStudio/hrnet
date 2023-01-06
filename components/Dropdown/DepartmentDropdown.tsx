@@ -5,7 +5,7 @@ import { GoLaw } from 'react-icons/go'
 import styled from 'styled-components'
 import CustomizedMenus from './Dropdown'
 
-export default function DepartmentDropdown({ onChange, placeholder }: Props) {
+export default function DepartmentDropdown({ error, onChange, placeholder }: Props) {
 	const departments: Array<Option> = [
 		{
 			id: '1',
@@ -61,6 +61,7 @@ export default function DepartmentDropdown({ onChange, placeholder }: Props) {
 
 	return (
 		<CustomizedMenus
+			error={error}
 			options={departments}
 			onChange={onChange}
 			defaultPlaceholder={placeholder}
@@ -83,6 +84,7 @@ interface Option {
 	view: any
 }
 interface Props {
+	error: boolean
 	onChange: Function
 	placeholder: string
 }

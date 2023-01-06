@@ -1,6 +1,6 @@
 import CustomizedMenus from './Dropdown'
 
-export default function StateDropdown({ onChange, placeholder }: Props) {
+export default function StateDropdown({ error, onChange, placeholder }: Props) {
 	const states: Array<string> = [
 		'Alabama',
 		'Alaska',
@@ -65,6 +65,7 @@ export default function StateDropdown({ onChange, placeholder }: Props) {
 
 	return (
 		<CustomizedMenus
+			error={error}
 			options={states}
 			onChange={onChange}
 			defaultPlaceholder={placeholder}
@@ -74,6 +75,7 @@ export default function StateDropdown({ onChange, placeholder }: Props) {
 }
 
 interface Props {
+	error: boolean
 	onChange: Function
 	placeholder: string
 }
