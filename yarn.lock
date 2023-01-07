@@ -1250,10 +1250,10 @@ shallowequal@^1.1.0:
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
 
-simple-react-modal-plugin@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/simple-react-modal-plugin/-/simple-react-modal-plugin-0.6.0.tgz#07ae19691d6c6339fc4d5aedb6bed9d7f3543a87"
-  integrity sha512-CrW/R0+J1kiO09w0kT1CvaHmcwZIox2W+mgupD5ILK7T3ZJbZLkFVLzncslHRA2eLvB5XyVen7CgHCwwm9pBhg==
+simple-react-modal-plugin@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/simple-react-modal-plugin/-/simple-react-modal-plugin-0.8.0.tgz#02235b88804fefbe186271530dd207369cb8dc8f"
+  integrity sha512-0ujDrBGzLtisq9fogGPRp9SGF2Hb0KYAwC3FL4ECS9LRQn1+eF2l8UbF89JClSTcVVVSIxTyiO5dWEPQLmsEHg==
 
 source-map-js@^1.0.2:
   version "1.0.2"
