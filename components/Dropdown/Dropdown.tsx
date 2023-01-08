@@ -6,10 +6,9 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import Slide from '@mui/material/Slide'
 import styles from './Dropdown.module.css'
 
-export default function CustomizedMenus({ error, options, onChange, defaultPlaceholder, scrollable }: Props) {
+export default function CustomizedMenus({ error, options, onChange, setPlaceholder, placeholder, scrollable }: Props) {
 
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-	const [placeHolder, setPlaceholder] = useState<string>(defaultPlaceholder)
 	const open = Boolean(anchorEl)
 	
 	const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -27,9 +26,7 @@ export default function CustomizedMenus({ error, options, onChange, defaultPlace
 	return (
 		<div className={styles.dropdown_container}>
 			<Button
-				// className={error ? "error" : ""}
 				className={error ? styles.input_error : ""}
-				id="dropdown-button"
 				aria-controls={open ? 'dropdown-menu' : undefined}
 				aria-haspopup="true"
 				aria-expanded={open ? 'true' : undefined}
@@ -39,7 +36,7 @@ export default function CustomizedMenus({ error, options, onChange, defaultPlace
 				endIcon={<KeyboardArrowDownIcon />}
 				fullWidth
 			>
-				{placeHolder}
+				{placeholder}
 			</Button>
 
 			<Menu
@@ -52,7 +49,6 @@ export default function CustomizedMenus({ error, options, onChange, defaultPlace
 					vertical: 'bottom',
 					horizontal: 'center',
 				}}
-				id="dropdown-menu"
 				anchorEl={anchorEl}
 				open={open}
 				onClose={handleClose}
@@ -80,7 +76,8 @@ interface Option { id: string, value: string, view: any }
 interface Props {
 	error: boolean
 	options: Array<Option> | Array<string>
-	defaultPlaceholder: string
+	placeholder: string
+	setPlaceholder: React.Dispatch<React.SetStateAction<string>>
 	onChange: Function
 	scrollable?: boolean
 }
