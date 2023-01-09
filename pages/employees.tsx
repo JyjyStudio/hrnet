@@ -28,6 +28,7 @@ const StyledTitle = styled.h2`
 const StyledLink = styled(Link)`
 	display: flex;
     align-items: center;
+	width: fit-content;
 `
 const ArrowLeftIcon = styled(KeyboardBackspaceIcon)`
 	margin-right: 5px;
