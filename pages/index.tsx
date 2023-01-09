@@ -1,11 +1,24 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import { addEmployee } from '../utils/store/employees/EmployeesSlice'
+import { useTsDispatch } from '../utils/store/hooks'
+import { SubmitHandler } from 'react-hook-form'
+import Form, { Inputs } from '../components/Form/Form'
+import Modal from 'simple-react-modal-plugin'
+import useModal from 'simple-react-modal-plugin/useModal'
 import styled from 'styled-components'
-import Form from '../components/Form/Form'
-
 
 export default function HomePage(): JSX.Element {
 
+	const { visible, toggle } = useModal()
+	const dispatch = useTsDispatch()
+
+	const onSubmit: SubmitHandler<Inputs> = (newEmployee: Inputs) => {
+		toggle()
+		dispatch(addEmployee(newEmployee))
+		console.log('newEmployee:', newEmployee)
+	}
+	
 	return (
 	<>
 		<Head>
@@ -18,10 +31,9 @@ export default function HomePage(): JSX.Element {
 				<StyledLink href="employees">View Current Employees</StyledLink>
 			</Headings>
 
-			<Form />
-
+			<Form onSubmit={onSubmit} />
+			<Modal visible={visible} hide={toggle}>Employee Successfully Created !</Modal>
 		</Container>
-
 	</>
 	)
 }
