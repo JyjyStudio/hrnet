@@ -119,8 +119,8 @@ export default function Table() {
 											{row.zipCode}
 										</TableCell>
 										<TableCell>
-											<EditBtn aria-label={`edit user ${row.firstname} ${row.lastname}`} onClick={() => handleEdit(row)}><FiEdit/></EditBtn>
-											<DeleteBtn aria-label={`delete user ${row.firstname} ${row.lastname}`} onClick={() => handleDelete(row)}><RiDeleteBin5Line/></DeleteBtn>
+											<EditBtn aria-label={`edit user ${row.firstname} ${row.lastname}`} onClick={() => handleEdit(row)}><FiEdit role="presentation" focusable="false" /></EditBtn>
+											<DeleteBtn aria-label={`delete user ${row.firstname} ${row.lastname}`} onClick={() => handleDelete(row)}><RiDeleteBin5Line role="presentation" focusable="false" /></DeleteBtn>
 										</TableCell>
 									</TableRow>
 								))}
