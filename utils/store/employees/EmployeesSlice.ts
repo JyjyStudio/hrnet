@@ -3,18 +3,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 //creation d'une partie de notre store (slice). Contient le nom du slice, son state initial et les reducers
 const initialState: Array<Employee> = [
 	{
-		firstname: 'John',
-		lastname: 'Doe',
-		dateOfBirth: '21/09/1987',
-		startDate: '12/01/2023',
-		street: 'street city',
-		city: 'city street',
-		state: 'Alabama',
-		zipCode: '56945',
-		department: 'Sales',
-		id: '958sdzfz,'
-	},
-	{
 		firstname: 'Tony',
 		lastname: 'Stark',
 		dateOfBirth: '01/12/1976',
@@ -25,7 +13,43 @@ const initialState: Array<Employee> = [
 		zipCode: '92000',
 		department: 'Legal',
 		id: 'sdfz5521z,'
-	}
+	},
+	{
+		firstname: 'Iron',
+		lastname: 'Man',
+		dateOfBirth: '01/02/1982',
+		startDate: '01/01/2023',
+		street: '1st avenue',
+		city: 'New York City',
+		state: 'New York',
+		zipCode: '89612',
+		department: 'Engineering',
+		id: 'sdcsd658,'
+	},
+	{
+		firstname: 'Mark',
+		lastname: 'Landers',
+		dateOfBirth: '01/12/1996',
+		startDate: '01/01/2021',
+		street: '1st avenue',
+		city: 'Paris',
+		state: 'Paris',
+		zipCode: '75000',
+		department: 'Human Resources',
+		id: '584szdzfz,'
+	},
+	{
+		firstname: 'John',
+		lastname: 'Doe',
+		dateOfBirth: '09/21/1987',
+		startDate: '12/01/2023',
+		street: 'street city',
+		city: 'city street',
+		state: 'Alabama',
+		zipCode: '56945',
+		department: 'Sales',
+		id: '958sdzfz,'
+	},
 ]
 
 export const employeesSlice = createSlice({
