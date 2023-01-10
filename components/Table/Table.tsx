@@ -27,7 +27,6 @@ export default function Table() {
 	const [rows, setRows] = useState(employees)
 	const [showForm, setShowForm] = useState(false)
 	const [valuesToEdit, setValuesToEdit] = useState(employees[0])
-	console.log('valuesToEdit:', valuesToEdit)
 	const dispatch = useTsDispatch()
 
 	/* sorting the content by clicking on the arrow */
@@ -120,8 +119,8 @@ export default function Table() {
 											{row.zipCode}
 										</TableCell>
 										<TableCell>
-											<EditBtn onClick={() => handleEdit(row)}><FiEdit/></EditBtn>
-											<DeleteBtn onClick={() => handleDelete(row)}><RiDeleteBin5Line/></DeleteBtn>
+											<EditBtn aria-label={`edit user ${row.firstname} ${row.lastname}`} onClick={() => handleEdit(row)}><FiEdit/></EditBtn>
+											<DeleteBtn aria-label={`delete user ${row.firstname} ${row.lastname}`} onClick={() => handleDelete(row)}><RiDeleteBin5Line/></DeleteBtn>
 										</TableCell>
 									</TableRow>
 								))}
