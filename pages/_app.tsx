@@ -22,6 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
 					quality={100}
 					fill
 					placeholder="blur"
+					priority
 				/>
 			</BgContainer>
 			<Provider store={store}>
