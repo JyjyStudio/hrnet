@@ -1,7 +1,7 @@
-import Head from 'next/head'
-import EmployeesTable from '../components/Table/Table'
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
-import Link from 'next/link'
+import Head from "next/head"
+import EmployeesTable from "../components/Table/Table"
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace"
+import Link from "next/link"
 import styled from "styled-components"
 
 export default function list() {
@@ -23,11 +23,11 @@ export default function list() {
 }
 
 const StyledTitle = styled.h2`
-	padding: 5%;
-` 
+	padding: 5% 5% 2%;
+`
 const StyledLink = styled(Link)`
 	display: flex;
-    align-items: center;
+	align-items: center;
 	width: fit-content;
 `
 const ArrowLeftIcon = styled(KeyboardBackspaceIcon)`
