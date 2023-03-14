@@ -4,7 +4,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace"
 import Link from "next/link"
 import styled from "styled-components"
 
-export default function list() {
+export default function EmployeesScreen() {
 	return (
 		<>
 			<Head>
