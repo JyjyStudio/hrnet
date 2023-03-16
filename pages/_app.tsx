@@ -1,19 +1,21 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import BgImage from '/public/assets/Abstract-Gradient-5.png'
-import styled from 'styled-components'
-import type { AppProps } from 'next/app'
-import { Provider } from 'react-redux'
+import Head from "next/head"
+import Image from "next/image"
+import BgImage from "/public/assets/Abstract-Gradient-5.png"
+import styled from "styled-components"
+import type { AppProps } from "next/app"
+import { Provider } from "react-redux"
 import { PersistGate } from "redux-persist/integration/react"
-import { store, persistor } from '../utils/store/store'
-import '../utils/styles/globals.css'
+import { store, persistor } from "../utils/store/store"
+import "../utils/styles/globals.css"
 
 export default function App({ Component, pageProps }: AppProps) {
 	return (
 		<>
 			<Head>
 				<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-				<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+				<meta name="theme-color" content="#4285f4" />
+				<link rel="apple-touch-icon" href="../assets/favicon.png" />
+				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 			</Head>
 			<BgContainer>
 				<Image
@@ -40,9 +42,8 @@ const BgContainer = styled.div`
 	width: 100vw;
 	height: 100vh;
 	@media (max-width: 500px) {
-        background-attachment: scroll;
+		background-attachment: scroll;
 		min-width: 100%;
-  		min-height: 100%;
-    }
+		min-height: 100%;
+	}
 `
-
