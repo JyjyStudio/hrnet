@@ -14,8 +14,9 @@ export default function App({ Component, pageProps }: AppProps) {
 			<Head>
 				<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 				<meta name="theme-color" content="#4285f4" />
-				<link rel="apple-touch-icon" href="../assets/favicon.png" />
+				<link rel="apple-touch-icon" href="/assets/favicon.png" />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+				<link rel="shortcut icon" href="/assets/favicon.png" />
 			</Head>
 			<BgContainer>
 				<Image
