@@ -4,8 +4,8 @@ import { FieldError } from "react-hook-form"
 import DatePicker, { DateObject } from "react-multi-date-picker"
 import InputIcon from "react-multi-date-picker/components/input_icon"
 
-export default function DPicker({ onChange, maxDate, noWeekends, error, value="" }: Props) {
-	return 	(
+export default function DPicker({ onChange, maxDate, noWeekends, error, value = "" }: Props) {
+	return (
 		<DatePicker
 			containerClassName={error ? "datepicker error" : "datepicker"}
 			maxDate={maxDate && maxDate}
@@ -13,16 +13,16 @@ export default function DPicker({ onChange, maxDate, noWeekends, error, value=""
 			editable={false}
 			calendarPosition="bottom-end"
 			weekStartDayIndex={1}
-			animations={[transition()]} 
+			animations={[transition()]}
 			fixMainPosition={true}
 			render={<InputIcon />}
 			mapDays={({ date }) => {
-				let props = {className:''}
+				let props = { className: "" }
 				let isWeekend = [0, 6].includes(date.weekDay.index)
 				if (isWeekend && noWeekends) props.className = "highlight highlight-red"
 				return props
 			}}
-			onChange={(dateObject:DateObject) => onChange(dateObject.format()) }
+			onChange={(dateObject: DateObject) => onChange(dateObject.format())}
 			value={value}
 		/>
 	)
